@@ -68,9 +68,8 @@ class AccountController extends Controller
             }
 
         } else {
-            return redirect()
-            ->route('account.login')
-            ->withErrors('$validator')
+            return redirect()->route('account.login')
+            ->withErrors($validator)
             ->withInput($request->only('email'));
         }
     }
