@@ -140,14 +140,14 @@ class AccountController extends Controller
             $imageName = $id.'-'.time().'.'.$ext;
             $image->move(public_path('/profile_pic/'), $imageName);
 
-            //create a small thumbnail
+            // create a small thumbnail
             $sourcePath = public_path('/profile_pic/'. $imageName);
             $manager = new ImageManager (Driver::class);
             $image = $manager->read($sourcePath);
 
-            //crop the best fitting 5:3 (600x360) ratio and resize to 600x360 pixels
+            // crop the best fitting 5:3 (600x360) ratio and resize to 600x360 pixels
             $image->cover(150, 150);
-            $image->toPng(public_path('/profile_pic/thumb/'. $imageName));
+            $image->toPng()->save(public_path('/profile_pic/thumb/'. $imageName));
 
             //delete old profile pictures
             File::delete(public_path('/profile_pic/thumb/'. Auth::user()->image));
