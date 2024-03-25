@@ -71,7 +71,7 @@
                             <div class="pt-3 text-end">
                                 <a href="#" class="btn btn-secondary">Save</a>
                                 @if (Auth::check())
-                                    <a href="#" class="btn btn-primary">Apply</a>
+                                    <a href="#" onclick="applyJob({{ $job->id }})" class="btn btn-primary">Apply</a>
                                 @else
                                     <a href="javascript:void(0);" class="btn btn-primary disabled">Login to apply</a>
                                 @endif
@@ -84,7 +84,7 @@
                     <div class="card shadow border-0">
                         <div class="job_sumary">
                             <div class="summery_header pb-1 pt-4">
-                                <h3>Job Summery</h3>
+                                <h3>Job Summary</h3>
                             </div>
                             <div class="job_content pt-3">
                                 <ul>
@@ -111,7 +111,7 @@
                                         <li>Location: <span>{{ $job->company_location }}</span></li>
                                     @endif
                                     @if (!empty($job->company_website))
-                                        <li>Webite: <span><a href="{{ $job->company_website }}">{{ $job->company_website }}</a></span></li>
+                                        <li>Website: <span><a href="{{ $job->company_website }}">{{ $job->company_website }}</a></span></li>
                                     @endif
                                 </ul>
                             </div>
@@ -130,13 +130,13 @@
         if(confirm("Are you sure you want to apply for this job ?")) {
             $.ajax({
                 url: '{{ route("applyJob") }}',
-                type: 'post',
+                type: 'POST',
                 data: {id:id},
                 dataType: 'json',
                 success: function(response) {
                     window.location.href = "{{ url()->current() }}";
                 }
-            })
+            });
         }
     }
 </script>

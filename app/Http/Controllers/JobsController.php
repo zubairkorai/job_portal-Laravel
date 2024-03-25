@@ -88,34 +88,37 @@ class JobsController extends Controller
 
         // If job not found in db
         if($job == null){
-            session()->flash('error','Job does not exist');
+            $message = "Job does not exist";
+            session()->flash('error',$message);
             return response()->json([
                 'status' => false,
-                'message' => 'Job does not exist'
+                'message' => $message
             ]);
         }
 
         // User can't apply on his own created job 
         $employer_id = $job->user_id;
         if($employer_id == Auth::user()->id){
-            session()->flash('error',"You can't apply on your created job");
+            $message = "You can't apply on your created job";
+            session()->flash('error',$message);
             return response()->json([
                 "status"=> false,
-                "message"=> "You can not apply on your created job"
+                "message"=> $message
             ]);
         }
 
-        // You can't apply a job twice
+        // You can't apply on a job twice
         $jobApplication = JobApplication::where([
-            'user_id' => Auth::user()->$id,
+            'user_id' => Auth::user()->id,
             'job_id' => $id
         ])->count();
 
         if($jobApplication > 0){
-            session()->flash('error','You already have applied for this job');
+            $message = "You already have applied for this job";
+            session()->flash('error', $message);
             return response()->json([
                 'status'=> false,
-                'message'=> 'You already have applied for this job'
+                'message'=> $message
             ]);
         }
 
@@ -137,10 +140,11 @@ class JobsController extends Controller
 
         Mail::to($employer->email)->send(new JobNotificationEmail($mailData));
 
-        session()->flash('success',"You have applied successfully");
+        $message="You have applied successfully";
+        session()->flash('success', $message);
             return response()->json([
-                "status"=> false,
-                "message"=> "You have applied successfully"
+                "status"=> true,
+                "message"=> $message
             ]);
     }
 

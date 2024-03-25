@@ -15,27 +15,27 @@ Route::group(['account'], function() {
 
     // Guest Route
     Route::group(['middleware' => 'guest'], function() {
-        Route::get("/register", [AccountController::class,"registration"])->name("account.registration");
-        Route::post("/process-register", [AccountController::class,"processRegistration"])->name("account.processRegistration");
-        Route::get("/login", [AccountController::class,"login"])->name("account.login");
-        Route::post("/authenticate", [AccountController::class,"authenticate"])->name("account.authenticate");
+        Route::GET("/register", [AccountController::class,"registration"])->name("account.registration");
+        Route::POST("/process-register", [AccountController::class,"processRegistration"])->name("account.processRegistration");
+        Route::GET("/login", [AccountController::class,"login"])->name("account.login");
+        Route::POST("/authenticate", [AccountController::class,"authenticate"])->name("account.authenticate");
     });
 
     // Authenticated Routes
     Route::group(['middleware' => 'auth'], function() {
-        Route::get('/profile', [AccountController::class,'profile'])->name('account.profile');
-        Route::put('/update-profile', [AccountController::class,'updateProfile'])->name('account.updateProfile');
-        Route::get('/logout', [AccountController::class,'logout'])->name('account.logout');
-        Route::post('/update-profile-pic', [AccountController::class,'updateProfilePic'])->name('account.updateProfilePic');
-        Route::get('/create-job', [AccountController::class,'createJob'])->name('account.createJob');
-        Route::post('/save-job', [AccountController::class,'saveJob'])->name('account.saveJob');
-        Route::get('/my-jobs',[AccountController::class,'myJob'])->name('account.myJob');
-        Route::get('/my-jobs/edit/{jobId}',[AccountController::class,'jobEdit'])->name('account.jobEdit');
-        Route::post('/update-job/{jobId}', [AccountController::class,'updateJob'])->name('account.updateJob');
-        Route::post('/delete-job', [AccountController::class,'deleteJob'])->name('account.deleteJob');
-        Route::post('/my-job-applications', [AccountController::class,'myJobApplications'])->name('account.myJobApplications');
-        Route::post('/remove-job-application', [AccountController::class,'removeJob'])->name('account.removeJob');
+        Route::GET('/profile', [AccountController::class,'profile'])->name('account.profile');
+        Route::PUT('/update-profile', [AccountController::class,'updateProfile'])->name('account.updateProfile');
+        Route::GET('/logout', [AccountController::class,'logout'])->name('account.logout');
+        Route::POST('/update-profile-pic', [AccountController::class,'updateProfilePic'])->name('account.updateProfilePic');
+        Route::GET('/create-job', [AccountController::class,'createJob'])->name('account.createJob');
+        Route::POST('/save-job', [AccountController::class,'saveJob'])->name('account.saveJob');
+        Route::GET('/my-jobs',[AccountController::class,'myJob'])->name('account.myJob');
+        Route::GET('/my-jobs/edit/{jobId}',[AccountController::class,'jobEdit'])->name('account.jobEdit');
+        Route::POST('/update-job/{jobId}', [AccountController::class,'updateJob'])->name('account.updateJob');
+        Route::POST('/delete-job', [AccountController::class,'deleteJob'])->name('account.deleteJob');
+        Route::GET('/my-job-applications', [AccountController::class,'myJobApplications'])->name('account.myJobApplications');
+        Route::POST('/remove-job-application', [AccountController::class,'removeJobs'])->name('account.removeJobs');
 
     });
-
+    
 });

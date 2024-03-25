@@ -335,11 +335,11 @@ class AccountController extends Controller
                             ->with(['job', 'job.jobType','job.applications'])
                             ->paginate(10);
         return view('front.account.job.my-job-applications',[
-            'jobApplication' => $jobApplications
+            'jobApplications' => $jobApplications
         ]);
     }
 
-    public function removeJob(Request $request){
+    public function removeJobs(Request $request){
         $jobApplication = JobApplication::where(['id' => $request->id ,'user_id', Auth::user()->id])->first();
         if($jobApplication == null) {
             session()->flash('error','Job application Not Found');

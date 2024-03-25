@@ -8,7 +8,7 @@
                 <div class="col">
                     <nav aria-label="breadcrumb" class=" rounded-3 p-3 mb-4">
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                             <li class="breadcrumb-item active">Account Settings</li>
                         </ol>
                     </nav>
@@ -43,7 +43,7 @@
                                             @foreach ($jobApplications as $jobApplication)
                                                 <tr class="active">
                                                     <td>
-                                                        <div class="job-name fw-500">{{ $jobApplication->job->title }}</div>
+                                                        <div class="job-name fw-500">{{ $jobApplication->job->name }}</div>
                                                         <div class="info1">{{ $jobApplication->job->jobType->name }} . {{ $jobApplication->job->location }}</div>
                                                     </td>
                                                     <td>{{ \carbon\carbon::parse($jobApplication->applied_date)->format('d M, Y') }}</td>
@@ -94,8 +94,8 @@
     function removeJob(id) {
         if(confirm("Are you sure you want to remove?")) {
             $.ajax({
-                url: '{{ route("account.removeJob") }}',
-                type: 'post',
+                url: '{{ route("account.removeJobs") }}',
+                type: 'POST',
                 data: {id: id},
                 dataType: 'json',
                 success: function(response) {
