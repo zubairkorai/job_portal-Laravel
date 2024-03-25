@@ -10,6 +10,7 @@ Route::get("/", [HomeController::class,"index"])->name("home");
 Route::get("/jobs", [JobsController::class,"index"])->name("jobs");
 Route::get("/jobs/detail/{id}", [JobsController::class,"detail"])->name("jobDetail");
 Route::post("/apply-job", [JobsController::class,"applyJob"])->name("applyJob");
+Route::post("/saved-job", [JobsController::class,"saveJob"])->name("saveJob");
 
 Route::group(['account'], function() {
 
@@ -35,6 +36,9 @@ Route::group(['account'], function() {
         Route::POST('/delete-job', [AccountController::class,'deleteJob'])->name('account.deleteJob');
         Route::GET('/my-job-applications', [AccountController::class,'myJobApplications'])->name('account.myJobApplications');
         Route::POST('/remove-job-application', [AccountController::class,'removeJob'])->name('account.removeJob');
+        Route::GET('/saved-job', [AccountController::class,'savedJobs'])->name('account.savedJobs');
+        Route::POST('/remove-saved-job', [AccountController::class,'removeSavedJob'])->name('account.removeSavedJob');
+        Route::POST('/update-password', [AccountController::class,'updatePassword'])->name('account.updatePassword');
 
     });
     
