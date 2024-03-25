@@ -6,16 +6,21 @@ use App\Http\Controllers\JobsController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get("/", [HomeController::class,"index"])->name("home");
-Route::get("/jobs", [JobsController::class,"index"])->name("jobs");
-Route::get("/jobs/detail/{id}", [JobsController::class,"detail"])->name("jobDetail");
-Route::post("/apply-job", [JobsController::class,"applyJob"])->name("applyJob");
-Route::post("/saved-job", [JobsController::class,"saveJob"])->name("saveJob");
+Route::GET("/", [HomeController::class,"index"])->name("home");
+Route::GET("/jobs", [JobsController::class,"index"])->name("jobs");
+Route::GET("/jobs/detail/{id}", [JobsController::class,"detail"])->name("jobDetail");
+Route::POST("/apply-job", [JobsController::class,"applyJob"])->name("applyJob");
+Route::POST("/saved-job", [JobsController::class,"saveJob"])->name("saveJob");
+Route::GET("/forgot-password", [AccountController::class,"forgotPassword"])->name("account.forgotPassword");
+Route::POST("/process-forgot-password", [AccountController::class,"processForgotPassword"])->name("account.processForgotPassword");
+Route::GET("/reset-password/{token}", [AccountController::class,"resetPassword"])->name("account.resetPassword");
+Route::POST("/process-reset-password", [AccountController::class,"processResetPassword"])->name("account.processResetPassword");
 
-Route::group(['account'], function() {
+
+Route::GROUP(['account'], function() {
 
     // Guest Route
-    Route::group(['middleware' => 'guest'], function() {
+    Route::GROUP(['middleware' => 'guest'], function() {
         Route::GET("/register", [AccountController::class,"registration"])->name("account.registration");
         Route::POST("/process-register", [AccountController::class,"processRegistration"])->name("account.processRegistration");
         Route::GET("/login", [AccountController::class,"login"])->name("account.login");
@@ -23,7 +28,7 @@ Route::group(['account'], function() {
     });
 
     // Authenticated Routes
-    Route::group(['middleware' => 'auth'], function() {
+    Route::GROUP(['middleware' => 'auth'], function() {
         Route::GET('/profile', [AccountController::class,'profile'])->name('account.profile');
         Route::PUT('/update-profile', [AccountController::class,'updateProfile'])->name('account.updateProfile');
         Route::GET('/logout', [AccountController::class,'logout'])->name('account.logout');
