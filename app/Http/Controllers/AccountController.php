@@ -339,18 +339,24 @@ class AccountController extends Controller
         ]);
     }
 
-    public function removeJobs(Request $request){
-        $jobApplication = JobApplication::where(['id' => $request->id ,'user_id', Auth::user()->id])->first();
+    public function removeJob(Request $request){
+        $jobApplication = JobApplication::where([
+                            'id' => $request->id,
+                            'user_id', Auth::user()->id
+                        ])->first();
+
         if($jobApplication == null) {
             session()->flash('error','Job application Not Found');
             return response()->json([
-                'status' => false ,
+                'status' => false,
             ]);
         }
+
+        // JobApplication::where('id', $request->id)->delete();
         JobApplication::find($request->id)->delete();
         session()->flash('success','Job application removed successfully.');
             return response()->json([
-                'status' => true ,
+                'status' => true,
             ]);
     }
 
