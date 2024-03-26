@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobsController;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +18,10 @@ Route::POST("/process-forgot-password", [AccountController::class,"processForgot
 Route::GET("/reset-password/{token}", [AccountController::class,"resetPassword"])->name("account.resetPassword");
 Route::POST("/process-reset-password", [AccountController::class,"processResetPassword"])->name("account.processResetPassword");
 
+Route::GROUP(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
+        Route::get('/dashboard', [DashboardController::class,'index'])->name('admin.dashboard');
+        Route::get('/users', [UserController::class,'index'])->name('admin.users');
+});
 
 Route::GROUP(['account'], function() {
 
