@@ -120,10 +120,9 @@
                         </div>
                     </div>
                     <div>
-                        {{ $jobs->links() }}
+                        {{ $jobs->withQueryString()->links() }}
                     </div>
                 </div>
-                
             </div>
         </div>
     </section>

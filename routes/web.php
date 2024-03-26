@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\JobApplicationController;
+use App\Http\Controllers\admin\JobController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobsController;
@@ -19,8 +21,16 @@ Route::GET("/reset-password/{token}", [AccountController::class,"resetPassword"]
 Route::POST("/process-reset-password", [AccountController::class,"processResetPassword"])->name("account.processResetPassword");
 
 Route::GROUP(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
-        Route::get('/dashboard', [DashboardController::class,'index'])->name('admin.dashboard');
-        Route::get('/users', [UserController::class,'index'])->name('admin.users');
+        Route::GET('/dashboard', [DashboardController::class,'index'])->name('admin.dashboard');
+        Route::GET('/users', [UserController::class,'index'])->name('admin.users');
+        Route::GET('/users/{id}', [UserController::class,'edit'])->name('admin.users.edit');
+        Route::PUT('/users/{id}', [UserController::class,'update'])->name('admin.users.update');
+        Route::DELETE('/users', [UserController::class,'destroy'])->name('admin.users.destroy');
+        Route::GET('/jobs', [JobController::class,'index'])->name('admin.jobs');
+        Route::DELETE('/jobs', [JobController::class,'destroy'])->name('admin.jobs.destroy');
+        Route::GET('/job-applications', [JobApplicationController::class,'index'])->name('admin.jobsApplications');
+        Route::DELETE('/job-applications', [JobApplicationController::class,'destroy'])->name('admin.jobApplications.destroy');
+
 });
 
 Route::GROUP(['account'], function() {

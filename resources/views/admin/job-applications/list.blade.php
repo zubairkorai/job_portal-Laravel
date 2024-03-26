@@ -24,7 +24,7 @@
                         <div class="card-body card-form">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <h3 class="fs-4 mb-1">Users</h3>
+                                    <h3 class="fs-4 mb-1">Job Applications</h3>
                                 </div>
                                 
                             </div>
@@ -32,29 +32,31 @@
                                 <table class="table ">
                                     <thead class="bg-light">
                                         <tr>
-                                            <th scope="col">ID</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Mobile</th>
+                                            <th scope="col">Job Title</th>
+                                            <th scope="col">User</th>
+                                            <th scope="col">Employer</th>
+                                            <th scope="col">Applied Date</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody class="border-0">
-                                        @if ($users ->  isNotEmpty())
-                                            @foreach ($users as $user)
-                                                <tr class="active">
-                                                    <td>{{ $user->id }}</td>
-                                                    <td><div class="job-name fw-500">{{ $user->name }}</div></td>
-                                                    <td>{{ $user->email }}</td>
-                                                    <td>{{ $user->mobile }}</td>
+                                        @if ($applications->isNotEmpty())
+                                            @foreach ($applications as $application)
+                                                <tr>
+                                                    <td>
+                                                        <p> {{ $application->job->name }} </p>
+                                                        {{-- <p>Applicants: {{ $job->applications->count() }} </p> --}}
+                                                    </td>
+                                                    <td>{{ $application->user->name }}</td>
+                                                    <td>{{ $application->employer->name }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($application->applied_date)->format('d M, Y') }}</td>
                                                     <td>
                                                         <div class="action-dots">
                                                             <button href="#" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-end">
-                                                                <li><a class="dropdown-item" href="{{ route('admin.users.edit', $user->id) }}"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li>
-                                                                <li><a class="dropdown-item" href="#" onclick="deleteUser({{ $user->id }})"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
+                                                                <li><a class="dropdown-item" href="#" onclick="deleteJobApplications({{ $application->id }})"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
                                                             </ul>
                                                         </div>
                                                     </td>
@@ -65,7 +67,7 @@
                                 </table>
                             </div>
                             <div>
-                                {{ $users->links() }}
+                                {{ $applications->links() }}
                             </div>
                         </div>
                     </div>               
@@ -78,15 +80,15 @@
 
 @section('customJs')
 <script type="text/javascript">
-    function deleteUser(id){
+    function deleteJobApplications(id){
         if(confirm("Are you sure you want to delete?")){
             $.ajax({
-                url: "{{ route('admin.users.destroy') }}",
+                url: "{{ route('admin.jobApplications.destroy') }}",
                 type: 'delete',
                 data: { id: id},
                 dataType: 'json',
                 success: function(response) {
-                    window.location.href = "{{ route('admin.users') }}";
+                    window.location.href = "{{ route('admin.jobsApplications') }}";
                 }
             });
         }
