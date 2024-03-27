@@ -27,6 +27,8 @@ Route::GROUP(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
         Route::PUT('/users/{id}', [UserController::class,'update'])->name('admin.users.update');
         Route::DELETE('/users', [UserController::class,'destroy'])->name('admin.users.destroy');
         Route::GET('/jobs', [JobController::class,'index'])->name('admin.jobs');
+        Route::GET('/jobs/edit/{id}', [JobController::class,'edit'])->name('admin.jobs.edit');
+        Route::PUT('/jobs/{id}', [JobController::class,'update'])->name('admin.jobs.update');
         Route::DELETE('/jobs', [JobController::class,'destroy'])->name('admin.jobs.destroy');
         Route::GET('/job-applications', [JobApplicationController::class,'index'])->name('admin.jobsApplications');
         Route::DELETE('/job-applications', [JobApplicationController::class,'destroy'])->name('admin.jobApplications.destroy');
